@@ -225,7 +225,6 @@
         el.pinBtn.title = pinLabel;
         el.pinBtn.setAttribute('aria-label', pinLabel);
         fit(el.title);
-        fit(el.body);
         updateMeta();
     }
 
@@ -247,7 +246,7 @@
         renderEditor();
         if (currentId) {
             setView('editor');
-            if (scrollTop) el.scroll.scrollTop = 0;
+            if (scrollTop) el.body.scrollTop = 0;
             if (focus) (focus === 'title' ? el.title : el.body).focus();
         }
     }
@@ -325,7 +324,6 @@
         m.body = el.body.value;
         m.updatedAt = Date.now();
         fit(el.title);
-        fit(el.body);
         updateMeta();
         renderList();
         scheduleSave();
@@ -347,16 +345,6 @@
             e.preventDefault();
             el.title.focus();
             el.title.setSelectionRange(el.title.value.length, el.title.value.length);
-        }
-    });
-
-    // 余白をクリックしたら本文にフォーカス
-    el.scroll.addEventListener('click', (e) => {
-        if (el.editor.hidden) return;
-        if (e.target === el.scroll || e.target === el.editor || e.target === el.meta) {
-            el.body.focus();
-            const n = el.body.value.length;
-            el.body.setSelectionRange(n, n);
         }
     });
 
@@ -426,7 +414,7 @@
             else setView('list');
             el.search.focus();
             el.search.select();
-        } else if (e.altKey && !mod && e.code === 'KeyN') {
+        } else if (e.code === 'KeyN' && !e.shiftKey && ((mod && !e.altKey) || (e.altKey && !mod))) {
             e.preventDefault();
             newMemo();
         } else if (mod && !e.shiftKey && e.key.toLowerCase() === 'z' && !inField(e.target) && lastDeleted) {
@@ -449,7 +437,7 @@
     document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); });
 
     // 画面幅の変更時にフォームの高さを調整し直す
-    window.addEventListener('resize', () => { if (!el.editor.hidden) { fit(el.title); fit(el.body); } });
+    window.addEventListener('resize', () => { if (!el.editor.hidden) fit(el.title); });
 
     // モバイル⇔デスクトップの切り替え時（回転・ウィンドウ幅変更）
     MOBILE.addEventListener('change', () => {
@@ -464,7 +452,7 @@
     // ---------- 起動 ----------
     function init() {
         el.search.nextElementSibling.textContent = IS_MAC ? '⌘K' : 'Ctrl K';
-        el.newBtn.title = IS_MAC ? '新規メモ (Option + N)' : '新規メモ (Alt + N)';
+        el.newBtn.title = IS_MAC ? '新規メモ (⌘N / Option+N)' : '新規メモ (Ctrl+N / Alt+N)';
         if (read(COLLAPSE_KEY) === '1') el.app.classList.add('collapsed');
 
         memos = load();
