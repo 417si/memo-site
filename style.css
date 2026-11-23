@@ -13,33 +13,31 @@
     --muted: rgba(20, 20, 22, 0.5);
 
     /* ガラス */
-    --glass: rgba(255, 255, 255, 0.3);
-    --glass-strong: rgba(255, 255, 255, 0.5);
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-edge: rgba(0, 0, 0, 0.06);
-    --glass-hi: rgba(255, 255, 255, 0.9);
-    --glass-lo: rgba(255, 255, 255, 0.25);
-    --glass-shadow: 0 8px 28px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.06);
-    --blur: blur(30px) saturate(190%);
+    /* ガラスは浮いている小さな部品だけ（＋ボタン・トースト）。薄く・静かに */
+    --glass-border: rgba(0, 0, 0, 0.07);
+    --glass-rim: rgba(255, 255, 255, 0.85);
+    --glass-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    --blur: blur(24px) saturate(180%);
 
-    --pill-a: rgba(255, 255, 255, 0.85);
-    --pill-b: rgba(255, 255, 255, 0.2);
-    --pill-shadow: 0 6px 18px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.08);
-    --item-hover: rgba(0, 0, 0, 0.045);
-    --item-selected: rgba(255, 255, 255, 0.55);
+    --pill: rgba(255, 255, 255, 0.7);
+    --pill-hover: rgba(255, 255, 255, 0.9);
+    --pill-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    /* それ以外はフラットな薄い塗り */
+    --item-hover: rgba(0, 0, 0, 0.04);
+    --item-selected: rgba(0, 0, 0, 0.07);
     --field: rgba(0, 0, 0, 0.05);
 
     --accent: #111111;
     --accent-2: #4a4a4e;
     --accent-soft: rgba(0, 0, 0, 0.1);
     --accent-text: #ffffff;
-    --accent-glow: rgba(0, 0, 0, 0.28);
     --danger: #111111;
     --danger-soft: rgba(0, 0, 0, 0.08);
 
-    --toast-bg: rgba(24, 24, 27, 0.6);
-    --toast-text: #f5f5f7;
-    --toast-accent: #ffffff;
+    --toast-bg: rgba(250, 250, 252, 0.72);
+    --toast-text: #141416;
+    --toast-accent: #141416;
 
     --sidebar-w: 312px;
     --font: "Inter", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
@@ -57,30 +55,26 @@
         --text-soft: #d2d2d7;
         --muted: rgba(244, 244, 246, 0.5);
 
-        --glass: rgba(40, 40, 44, 0.28);
-        --glass-strong: rgba(54, 54, 60, 0.42);
-        --glass-border: rgba(255, 255, 255, 0.14);
-        --glass-edge: rgba(0, 0, 0, 0.35);
-        --glass-hi: rgba(255, 255, 255, 0.28);
-        --glass-lo: rgba(255, 255, 255, 0.04);
-        --glass-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+        --glass-border: rgba(255, 255, 255, 0.12);
+        --glass-rim: rgba(255, 255, 255, 0.14);
+        --glass-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
 
-        --pill-a: rgba(255, 255, 255, 0.24);
-        --pill-b: rgba(255, 255, 255, 0.05);
-        --pill-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-        --item-hover: rgba(255, 255, 255, 0.07);
-        --item-selected: rgba(255, 255, 255, 0.1);
+        --pill: rgba(255, 255, 255, 0.1);
+        --pill-hover: rgba(255, 255, 255, 0.16);
+        --pill-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+
+        --item-hover: rgba(255, 255, 255, 0.05);
+        --item-selected: rgba(255, 255, 255, 0.09);
         --field: rgba(255, 255, 255, 0.08);
 
         --accent: #f4f4f6;
         --accent-2: #ffffff;
         --accent-soft: rgba(255, 255, 255, 0.16);
         --accent-text: #111111;
-        --accent-glow: rgba(0, 0, 0, 0.5);
         --danger: #f4f4f6;
         --danger-soft: rgba(255, 255, 255, 0.12);
 
-        --toast-bg: rgba(72, 72, 80, 0.55);
+        --toast-bg: rgba(60, 60, 66, 0.6);
         --toast-text: #f4f4f6;
         --toast-accent: #ffffff;
     }
@@ -118,21 +112,12 @@ svg {
 
 ::selection { background: var(--accent-soft); }
 
-/* ============ Glass（小さなUI用：トースト） ============ */
+/* ============ Glass（浮いている部品のみ） ============ */
 .toast {
-    background: linear-gradient(150deg, var(--glass-strong), var(--glass) 42%, var(--glass-lo) 100%);
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
     border: 1px solid var(--glass-border);
-    box-shadow:
-        var(--glass-shadow),
-        inset 0 1.5px 0 var(--glass-hi),
-        inset 0 -1px 0 var(--glass-lo),
-        inset 0 0 0 1px var(--glass-edge);
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .toast { background: var(--toast-bg); }
+    box-shadow: var(--glass-shadow), inset 0 0.5px 0 var(--glass-rim);
 }
 
 /* ============ Layout ============ */
@@ -173,7 +158,7 @@ svg {
 .brand {
     margin: 0;
     font-size: 23px;
-    font-weight: 750;
+    font-weight: 700;
     letter-spacing: -0.015em;
 }
 
@@ -187,13 +172,11 @@ svg {
     border-radius: 999px;
     background: var(--field);
     color: var(--muted);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), inset 0 0 0 1px var(--glass-edge), 0 1px 0 var(--glass-hi);
     transition: box-shadow 0.15s, background 0.15s;
 }
 .search svg { width: 16px; height: 16px; margin-right: 8px; }
 .search:focus-within {
-    background: var(--glass-strong);
-    box-shadow: 0 0 0 3px var(--accent-soft), inset 0 0 0 1px var(--accent);
+    box-shadow: inset 0 0 0 1px rgba(127, 127, 127, 0.45);
 }
 .search input {
     flex: 1; min-width: 0;
@@ -222,7 +205,7 @@ svg {
 .group-label {
     padding: 14px 12px 6px;
     font-size: 11.5px;
-    font-weight: 650;
+    font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--muted);
 }
@@ -233,25 +216,21 @@ svg {
     width: 100%;
     margin: 2px 0;
     padding: 10px 14px;
-    border: 1px solid transparent;
-    border-radius: 18px;
+    border: 0;
+    border-radius: 12px;
     background: transparent;
     text-align: left;
-    transition: background 0.15s, box-shadow 0.15s, border-color 0.15s;
+    transition: background 0.15s;
 }
 .item:hover { background: var(--item-hover); }
 .item.selected {
     background: var(--item-selected);
-    -webkit-backdrop-filter: blur(12px) saturate(170%);
-    backdrop-filter: blur(12px) saturate(170%);
-    border-color: var(--glass-border);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), inset 0 1px 0 var(--glass-hi);
 }
 .item:focus-visible { outline-offset: -2px; }
 
 .item-title {
     display: flex; align-items: center; gap: 6px;
-    font-size: 14.5px; font-weight: 650; line-height: 1.4;
+    font-size: 14.5px; font-weight: 600; line-height: 1.4;
 }
 .item-title span {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -309,38 +288,28 @@ svg {
     border-radius: 50%;
     background: transparent;
     color: var(--muted);
-    transition: background 0.15s, color 0.15s, transform 0.2s var(--ease), box-shadow 0.15s, border-color 0.15s;
+    transition: background 0.15s, color 0.15s, transform 0.2s var(--ease);
 }
 .icon-btn:hover {
-    background: var(--item-selected);
-    border-color: var(--glass-border);
+    background: var(--item-hover);
     color: var(--text);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), inset 0 1px 0 var(--glass-hi);
 }
 .icon-btn:active { transform: scale(0.92); }
 .icon-btn.danger:hover { background: var(--danger-soft); color: var(--danger); }
 .icon-btn[aria-pressed="true"] {
     color: var(--accent);
     background: var(--accent-soft);
-    border-color: var(--glass-border);
 }
 .icon-btn[aria-pressed="true"] svg { fill: currentColor; }
 .icon-btn.accent, .btn {
-    background: linear-gradient(160deg, var(--pill-a), var(--pill-b));
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    backdrop-filter: blur(14px) saturate(180%);
+    background: var(--pill);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
     color: var(--text);
     border: 1px solid var(--glass-border);
-    box-shadow:
-        var(--pill-shadow),
-        inset 0 1.5px 0 var(--glass-hi),
-        inset 0 -1px 1px var(--glass-lo);
+    box-shadow: var(--pill-shadow), inset 0 0.5px 0 var(--glass-rim);
 }
-.icon-btn.accent:hover {
-    background: linear-gradient(160deg, var(--pill-a), var(--pill-b));
-    color: var(--text);
-    filter: brightness(1.04);
-}
+.icon-btn.accent:hover { background: var(--pill-hover); color: var(--text); }
 
 .ico-back { display: none; }
 
@@ -381,7 +350,7 @@ svg {
     padding: 0;
     overflow: hidden;
     font-size: 32px;
-    font-weight: 750;
+    font-weight: 700;
     line-height: 1.3;
     letter-spacing: -0.02em;
 }
@@ -423,23 +392,21 @@ svg {
     display: grid; place-items: center;
     width: 76px; height: 76px;
     margin-bottom: 20px;
-    border-radius: 26px;
-    background: linear-gradient(150deg, var(--glass-strong), var(--glass));
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14), inset 0 1.5px 0 var(--glass-hi);
-    color: var(--accent);
+    border-radius: 24px;
+    background: var(--field);
+    color: var(--muted);
 }
 .empty-mark svg { width: 32px; height: 32px; stroke-width: 1.5; }
-.empty h2 { margin: 0 0 6px; font-size: 19px; font-weight: 700; }
+.empty h2 { margin: 0 0 6px; font-size: 19px; font-weight: 650; }
 .empty p { margin: 0 0 22px; font-size: 14px; color: var(--muted); }
 
 .btn {
     padding: 10px 24px;
     border-radius: 999px;
-    font-size: 14px; font-weight: 650;
-    transition: filter 0.15s, transform 0.2s var(--ease);
+    font-size: 14px; font-weight: 600;
+    transition: background 0.15s, transform 0.2s var(--ease);
 }
-.btn:hover { filter: brightness(1.04); }
+.btn:hover { background: var(--pill-hover); }
 .btn:active { transform: scale(0.96); }
 
 /* ============ Toast ============ */
@@ -465,7 +432,7 @@ svg {
     border: 0; border-radius: 999px;
     background: rgba(127, 127, 127, 0.18);
     color: var(--toast-accent);
-    font-weight: 650;
+    font-weight: 600;
 }
 .toast button:hover { background: rgba(127, 127, 127, 0.3); }
 
